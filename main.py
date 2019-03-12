@@ -1,7 +1,7 @@
 import random
 import copy
 
-deck = [ (2,1),(2,2),(2,3),(2,4),
+global_deck = [ (2,1),(2,2),(2,3),(2,4),
 		 (3,1),(3,2),(3,3),(3,4),
 		 (4,1),(4,2),(4,3),(4,4),
 		 (5,1),(5,2),(5,3),(5,4),
@@ -41,6 +41,9 @@ class table:
 		self.players = players #array of tuples: (id)
 		"""
 		player = [(card1, card2), balance, id]
+		board = [card1,card2,card3,card4,card5]
+		deck = [(card1, ... , card52)]
+		pot = n #value in points
 		"""
 
 		self.board = board
@@ -58,8 +61,14 @@ class table:
 	def flip(self):
 		self.board += draw(1, self.deck)
 
+	def shuffle(self):
+		self.deck = copy.copy(global_deck)
+		self.board = []
+		for player in self.players:
+			player[0] = 0
+
 def test_draw():
-	deck_ = copy.copy(deck)
+	deck_ = copy.copy(global_deck)
 	test = draw(52, deck_)
 	
 	print(deck_)
@@ -69,7 +78,7 @@ def test_draw():
 		print(element in deck_) 
 
 def test_table():
-	a = table([[(), 100, 1],[(), 100, 2],[(), 100, 3]],[],copy.copy(deck),0)
+	a = table([[(), 100, 1],[(), 100, 2],[(), 100, 3]],[],copy.copy(global_deck),0)
 	a.deal()
 	print(a.players)
 	print()
@@ -77,6 +86,11 @@ def test_table():
 	a.flip()
 	a.flip()
 	print(a.board)
+	print(len(a.deck))
+	a.shuffle()
+	print()
+	print(a.board)
+	print(a.players)
 	print(len(a.deck))
 
 
