@@ -21,12 +21,23 @@ global_deck = [ (2,1),(2,2),(2,3),(2,4),
 ### 4 -- Diamonds
 
 def remove(card,deck):
+	"""
+	Remove a card from a deck
+	"""
 	deck.remove(card)
 
 def add(card,deck):
+	"""
+	Add a card to a deck
+	"""
 	deck.append(card)
 
 def draw(number, deck_):
+	"""
+	draw number cards from deck_. 
+	Remove drawn cards from deck_
+	Return tuple of drawn cards 
+	"""
 	result_ = []
 	for n in range(number):
 		card = random.choice(deck_)
@@ -55,19 +66,50 @@ class table:
 		"""
 
 	def deal(self):
+		"""
+		Deal each player 2 cards from the current deck
+		"""
 		for player in self.players:
 			player[0] = draw(2, self.deck)
 
 	def flip(self):
+		"""
+		Add a card to the community stack from the current deck
+		"""
 		self.board += draw(1, self.deck)
 
 	def shuffle(self):
+		#shuffle the deck
+		"""
+		set self.deck to a copy of the global deck
+		set the board to an empty array
+		set each player hand to zero value
+		"""
 		self.deck = copy.copy(global_deck)
 		self.board = []
 		for player in self.players:
 			player[0] = 0
 
+	def bet(self, player_id, amount):
+		#player_id = int ()
+		for player in self.players:
+			if player[2] = player_id:
+				player[1] -= amount
+				self.pot += amount
+				break
+
+	def payout(self, player_id):
+		#pay player_id the amount in self.pot, reset self.pot
+		for player in self.players:
+			if player[2] = player_id:
+				player[1] += self.pot
+				self.pot = 0
+
+
 def test_draw():
+	"""
+	Test the draw function
+	"""
 	deck_ = copy.copy(global_deck)
 	test = draw(52, deck_)
 	
@@ -78,6 +120,12 @@ def test_draw():
 		print(element in deck_) 
 
 def test_table():
+	"""
+	Test the table class plus the following methods:
+		-deal
+		-flip
+		-shuffle
+	"""
 	a = table([[(), 100, 1],[(), 100, 2],[(), 100, 3]],[],copy.copy(global_deck),0)
 	a.deal()
 	print(a.players)
