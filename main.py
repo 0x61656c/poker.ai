@@ -93,23 +93,23 @@ class table:
 	def bet(self, player_id, amount):
 		#player_id = int ()
 		for player in self.players:
-			if player[2] = player_id:
+			if player[2] == player_id:
 				player[1] -= amount
 				self.pot += amount
 				break
 
-	def payout(self, player_id):
+	def payout(self, player_id, amount):
 		#pay player_id the amount in self.pot, reset self.pot
 		for player in self.players:
-			if player[2] = player_id:
-				player[1] += self.pot
-				self.pot = 0
+			if player[2] == player_id:
+				player[1] += amount
+				self.pot -= amount
 
 
 def test_draw():
 	"""
 	Test the draw function
-	"""
+""	"""
 	deck_ = copy.copy(global_deck)
 	test = draw(52, deck_)
 	
@@ -140,6 +140,11 @@ def test_table():
 	print(a.board)
 	print(a.players)
 	print(len(a.deck))
+	a.bet(1,99)
+	print(a.players)
+	print(a.pot)
+	a.payout(1)
+
 
 
 def main():
